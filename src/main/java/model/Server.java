@@ -3,40 +3,59 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
 public class Server implements Runnable{
 
-    private BlockingQueue<Task> tasks; //lista de cozi
-    private AtomicInteger waitingPeriod; //
+    private BlockingQueue<Task> tasks;  //lista de clienti
+    private AtomicInteger waitingPeriod;
 
     public Server(){
-        tasks = new LinkedBlockingQueue<>();
+        this.tasks = new LinkedBlockingQueue<>();
         waitingPeriod = new AtomicInteger(0);
     }
 
     public void addTask(Task newTask){
-        //add task to queue
-        //increment the waitingPer
         tasks.add(newTask);
-       // waitingPeriod.addAndGet(newTask.getProcessingTime());
+        waitingPeriod.incrementAndGet();
     }
 
     public void run(){
         while(true) {
-            //take next from queue
+            //take next tasks from queue
             //stop the thread for a time equal with the task's processing time
             //decrement the waitingPeriod
-            try {
-                Task task = tasks.take();
-             //   Thread.sleep(task.getProcessingTime() * 1000);
-            //    waitingPeriod.addAndGet(-task.getProcessingTime());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    //public Task[] getTasks(){
-        //....
-    //}
 
+            try {
+                // Take the next task from the queue
+                Task task = tasks.take();
+                // Simulate processing the task
+                Thread.sleep(task.getServiceTime()*1000);
+
+                // Decrement the waiting period
+                waitingPeriod.decrementAndGet();
+                } catch (InterruptedException e) {
+                // If the thread is interrupted, break out of the loop
+                break;
+                }
+            }
+
+        }
+
+
+    public Task[] getTasks(){
+
+         int numTasks = tasks.size();
+        Task[] taskArray = new Task[numTasks];
+        tasks.toArray(taskArray);
+
+        return taskArray;
+    }
+    public int getServiceTime(){
+        int sum = 0;
+        for(Task t:tasks){
+            sum = sum+ (int)t.getServiceTime();
+        }
+        return sum;
+    }
 }
+
+

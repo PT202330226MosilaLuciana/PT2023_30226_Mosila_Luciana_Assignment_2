@@ -3,24 +3,21 @@ import model.*;
 import java.util.*;
 import java.lang.*;
 
-public class Scheduler extends Thread{
+public class Scheduler{
 
     private List<Server> servers;
     private int maxNoServers;
-    private int maxTasksPerServer;
     private Strategy strategy;
 
-    public Scheduler(int maxNoServers, int maxTasksPerServer){
+    public Scheduler(int maxNoServers, Strategy strategy){
         //for maxNoServers
         //create servers objecrs
         //create thread with the object
+        this.maxNoServers=maxNoServers;
 
-      //  this.maxNoServers=maxNoServers;
-       // this.maxTasksPerServer=maxTasksPerServer;
-
-        servers = new ArrayList<>();
+        this.servers = new ArrayList<>();
         // Create servers with maxTasksPerServer and add them to the list
-        for (int i = 0; i < maxNoServers; i++) {
+        for (int i = 0; i < this.maxNoServers; i++) {
             Server server = new Server();
             servers.add(server);
         }
@@ -33,7 +30,6 @@ public class Scheduler extends Thread{
 
     }
 
-
     public void changeStrategy(SelectionPolicy policy) {
         //apply strategy pattern to instantiate the strategy with the concrete
         //strategy corresponding to policy
@@ -45,13 +41,14 @@ public class Scheduler extends Thread{
         }
     }
 
-//    public void dispatchTask(Task t){
-//        //call the strategy addTask method
-//        strategy.addTask();
-//    }
+    public void dispatchTask(Task t){
+        //call the strategy addTask method
+        strategy.addTask(servers,t);
+    }
 
     public List<Server> get_Servers(){
         return servers;
     }
+    public int maxNoServers(){return maxNoServers;}
 }
 

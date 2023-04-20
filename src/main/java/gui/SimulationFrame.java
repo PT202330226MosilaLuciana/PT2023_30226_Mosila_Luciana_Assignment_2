@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SimulationFrame extends JFrame {
+
     private JFrame frame;
 
     private JLabel lblClients;
@@ -23,7 +24,15 @@ public class SimulationFrame extends JFrame {
     private JTextField txtMinServiceTime;
     private JLabel lblMaxServiceTime;
     private JTextField txtMaxServiceTime;
-    private JButton btnSubmit;
+    private JButton startButton;
+
+    private int Q;
+    private int N;
+    private int simulationTime;
+    private int maxArrivalTime;
+    private int minArrivalTime;
+    private int maxServiceTime;
+    private int minServiceTime;
 
     public SimulationFrame() {
 
@@ -43,7 +52,7 @@ public class SimulationFrame extends JFrame {
         txtMinServiceTime = new JTextField(10);
         lblMaxServiceTime = new JLabel("Maximum service time:");
         txtMaxServiceTime = new JTextField(10);
-       // btnSubmit = new JButton("Submit");
+        startButton = new JButton("START");
 
 
         JPanel panel = new JPanel(new GridLayout(8, 2));
@@ -61,36 +70,45 @@ public class SimulationFrame extends JFrame {
         panel.add(txtMinServiceTime);
         panel.add(lblMaxServiceTime);
         panel.add(txtMaxServiceTime);
-       // panel.add(btnSubmit);
+        panel.add(startButton);
 
         frame.add(panel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(300, 200);
+        frame.setSize(400, 200);
         frame.setLocation(700, 300);
 
 
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                start();
+            }
+        });
 
-
-        // Set up the Submit button
-//        btnSubmit.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //submit();
-//            }
-//        });
     }
 
-//    public void run() {
-//        setVisible(true);
-//    }
-
-    //    public void submit() {
-//        int numberOfClients = getNumberOfClients();
-//        int numberOfQueues = getNumberOfQueues();
-//        int simulationInterval = getSimulationInterval();
-//        int minArrivalTime = getMinArrivalTime();
-//        int maxArrivalTime = getMaxArrivalTime();
-//        int minServiceTime = getMin
+    public void run() {
+        setVisible(true);
     }
+
+
+    public void start() {
+        N = Integer.parseInt(txtClients.getText());
+        Q = Integer.parseInt(txtQueues.getText());
+        simulationTime=Integer.parseInt(txtSimulationInterval.getText());
+        maxArrivalTime=Integer.parseInt(txtMaxArrivalTime.getText());
+        minArrivalTime=Integer.parseInt(txtMinArrivalTime.getText());
+        maxServiceTime=Integer.parseInt(txtMaxServiceTime.getText());
+        minServiceTime=Integer.parseInt(txtMinServiceTime.getText());
+
+    }
+     public int getN(){return this.N;}
+     public int getQ(){return this.Q;}
+     public int getSimulationTime(){return this.Q;}
+     public int getMaxArrivalTime(){return this.maxArrivalTime;}
+     public int getMinArrivalTime(){return this.minArrivalTime;}
+     public int getMaxServiceTime(){return this.maxServiceTime;}
+     public int getMinServiceTime(){return this.minServiceTime;}
+}
