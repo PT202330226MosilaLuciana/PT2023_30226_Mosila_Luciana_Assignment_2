@@ -9,14 +9,14 @@ public class Scheduler{
     private int maxNoServers;
     private Strategy strategy;
 
-    public Scheduler(int maxNoServers, Strategy strategy){
+    public Scheduler(int maxNoServers){
         //for maxNoServers
-        //create servers objecrs
+        //create servers objects
         //create thread with the object
         this.maxNoServers=maxNoServers;
 
         this.servers = new ArrayList<>();
-        // Create servers with maxTasksPerServer and add them to the list
+        // Create servers with maxTasksPerServer and add them to the list ??/maxtasksperServer???
         for (int i = 0; i < this.maxNoServers; i++) {
             Server server = new Server();
             servers.add(server);
@@ -46,7 +46,7 @@ public class Scheduler{
         strategy.addTask(servers,t);
     }
 
-    public List<Server> get_Servers(){
+    public List<Server> getServers(){
         return servers;
     }
     public int maxNoServers(){return maxNoServers;}

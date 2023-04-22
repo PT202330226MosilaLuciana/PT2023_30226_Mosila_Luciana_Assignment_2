@@ -20,10 +20,6 @@ public class Server implements Runnable{
 
     public void run(){
         while(true) {
-            //take next tasks from queue
-            //stop the thread for a time equal with the task's processing time
-            //decrement the waitingPeriod
-
             try {
                 // Take the next task from the queue
                 Task task = tasks.take();
@@ -42,7 +38,6 @@ public class Server implements Runnable{
 
 
     public Task[] getTasks(){
-
          int numTasks = tasks.size();
         Task[] taskArray = new Task[numTasks];
         tasks.toArray(taskArray);
@@ -55,6 +50,7 @@ public class Server implements Runnable{
             sum = sum+ (int)t.getServiceTime();
         }
         return sum;
+
     }
 }
 

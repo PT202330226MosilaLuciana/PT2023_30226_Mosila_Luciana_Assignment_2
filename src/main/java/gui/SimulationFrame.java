@@ -102,7 +102,6 @@ public class SimulationFrame extends JFrame {
         minArrivalTime=Integer.parseInt(txtMinArrivalTime.getText());
         maxServiceTime=Integer.parseInt(txtMaxServiceTime.getText());
         minServiceTime=Integer.parseInt(txtMinServiceTime.getText());
-
     }
      public int getN(){return this.N;}
      public int getQ(){return this.Q;}

@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5852f1e-06b6-41af-a65c-36a1825c21db" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/SimulationQ.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/ConcreteStrategyQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/ConcreteStrategyQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/ConcreteStrategyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/ConcreteStrategyTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/Scheduler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/SimulationManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/SimulationFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/SimulationFrame.java" afterDir="false" />
@@ -96,6 +93,9 @@
       <workItem from="1681931684082" duration="6680000" />
       <workItem from="1681981701732" duration="905000" />
       <workItem from="1681991778231" duration="18338000" />
+      <workItem from="1682016409052" duration="629000" />
+      <workItem from="1682100942498" duration="36000" />
+      <workItem from="1682172236758" duration="7163000" />
     </task>
     <servers />
   </component>

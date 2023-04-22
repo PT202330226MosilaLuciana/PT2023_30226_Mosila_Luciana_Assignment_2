@@ -26,9 +26,9 @@ public class Task implements Comparable<Task>{
     public void setServiceTime(int arrivalTime){
         this.arrivalTime = arrivalTime;}
 
-    public String toString() {
-        return "Task: arrivalTime: "+arrivalTime+ " serviceTime: "+ serviceTime;
-    }
+    public String TasksToString() {
+        return "(" +ID+ "," +arrivalTime+ "," +serviceTime+ ") ";
+        }
 
     @Override
     public int compareTo(Task other) {
