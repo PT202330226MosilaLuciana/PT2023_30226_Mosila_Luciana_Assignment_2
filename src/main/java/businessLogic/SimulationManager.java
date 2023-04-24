@@ -56,43 +56,6 @@ public class SimulationManager implements Runnable {
         Collections.sort(generatedTasks);
     }
 
-    //public void run() {
-//    int currentTime = 0;
-//    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
-//
-//        while (currentTime < simulationTime) {
-//            writer.write("\nCurrent Time:" + currentTime + "\n");
-//            // Check if any new tasks have arrived and dispatch them to the scheduler
-//            List<Task> arrivedTasks = new ArrayList<>();
-//            for (Task task : generatedTasks) {
-//                if (task.getArrivalTime() == currentTime) {
-//                    scheduler.dispatchTask(task);
-//                    arrivedTasks.add(task);
-//                }
-//            }
-//            generatedTasks.removeAll(arrivedTasks);
-//
-//            // Print the current state of each queue
-//            List<Server> servers = scheduler.getServers();
-//            for (int i = 0; i < servers.size(); i++) {
-//                writer.write("    Queue:" + (i + 1));
-//                writer.newLine();
-//                Task[] tasks = servers.get(i).getTasks();
-//                writer.write("        Tasks: ");
-//                for (int j = 0; j < tasks.length; j++)
-//                    writer.write(tasks[j].toString());
-//                writer.newLine();
-//            }
-//
-//            // Wait for 1 second before moving to the next time step
-//            Thread.sleep(1000);
-//            currentTime++;
-//        }
-//        writer.close();
-//    } catch (IOException | InterruptedException e) {
-//        e.printStackTrace();
-//    }
-//}
     public void run() {
         int currentTime = 0;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
