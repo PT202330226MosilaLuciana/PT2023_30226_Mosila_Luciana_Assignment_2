@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import businessLogic.*;
 public class SimulationFrame extends JFrame {
 
     private JFrame frame;
@@ -83,7 +83,27 @@ public class SimulationFrame extends JFrame {
 
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                start();
+                N = Integer.parseInt(txtClients.getText());
+                Q = Integer.parseInt(txtQueues.getText());
+                simulationTime=Integer.parseInt(txtSimulationInterval.getText());
+                maxArrivalTime=Integer.parseInt(txtMaxArrivalTime.getText());
+                minArrivalTime=Integer.parseInt(txtMinArrivalTime.getText());
+                maxServiceTime=Integer.parseInt(txtMaxServiceTime.getText());
+                minServiceTime=Integer.parseInt(txtMinServiceTime.getText());
+
+                txtClients.setEnabled(false);
+                txtQueues.setEnabled(false);
+                txtSimulationInterval.setEnabled(false);
+                txtMinArrivalTime.setEnabled(false);
+                txtMaxArrivalTime.setEnabled(false);
+                txtMinServiceTime.setEnabled(false);
+                txtMaxServiceTime.setEnabled(false);
+                startButton.setEnabled(false);
+
+                Simulation simulation =  new Simulation();
+                SimulationManager gen = new SimulationManager(SimulationFrame.this, simulation);
+                Thread t = new Thread(gen);
+                t.start();
             }
         });
 
@@ -94,20 +114,23 @@ public class SimulationFrame extends JFrame {
     }
 
 
-    public void start() {
-        N = Integer.parseInt(txtClients.getText());
-        Q = Integer.parseInt(txtQueues.getText());
-        simulationTime=Integer.parseInt(txtSimulationInterval.getText());
-        maxArrivalTime=Integer.parseInt(txtMaxArrivalTime.getText());
-        minArrivalTime=Integer.parseInt(txtMinArrivalTime.getText());
-        maxServiceTime=Integer.parseInt(txtMaxServiceTime.getText());
-        minServiceTime=Integer.parseInt(txtMinServiceTime.getText());
+    public int start() {
+       return 1;
     }
      public int getN(){return this.N;}
      public int getQ(){return this.Q;}
-     public int getSimulationTime(){return this.Q;}
+     public int getSimulationTime(){return this.simulationTime;}
      public int getMaxArrivalTime(){return this.maxArrivalTime;}
      public int getMinArrivalTime(){return this.minArrivalTime;}
      public int getMaxServiceTime(){return this.maxServiceTime;}
      public int getMinServiceTime(){return this.minServiceTime;}
+
+    public static void main(String[] args) {
+        SimulationFrame inputView = new SimulationFrame();
+//            if(inputView.start() == 1) {
+//                SimulationManager gen = new SimulationManager(inputView);
+//                Thread t = new Thread(gen);
+//                t.start();
+//            }
+    }
 }

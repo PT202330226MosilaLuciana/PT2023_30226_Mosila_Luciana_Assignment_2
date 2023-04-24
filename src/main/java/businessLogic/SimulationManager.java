@@ -1,74 +1,163 @@
 package businessLogic;
 import model.*;
 import gui.*;
+
+import java.io.*;
 import java.util.*;
 
-public class SimulationManager implements Runnable{
+public class SimulationManager implements Runnable {
 
     public SelectionPolicy selectionPolicy = SelectionPolicy.SHORTEST_TIME;
 
-    private Scheduler scheduler; //entity responsible with queue management and clinet distribution
-    private List<Task> generatedTasks; //pool of tasks (client shopping)
-    private SimulationFrame frame; //frame from displaying simulation si contine toate datele de intrare
+    private Scheduler scheduler; //entity responsible with queue management and client distribution
+    private List<Task> generatedTasks;
+    private SimulationFrame frame; //frame from displaying simulation and contains all the input data
 
-    public SimulationManager(){
-        frame = new SimulationFrame();
+    private String outputFileName = "output.txt";
+
+    private int Q;
+    private int N;
+    private int simulationTime;
+    private int maxArrivalTime;
+    private int minArrivalTime;
+    private int maxServiceTime;
+    private int minServiceTime;
+    private Simulation simulation;
+
+    public SimulationManager(SimulationFrame frame, Simulation simulation) {
+        this.simulation = simulation;
+        this.Q = frame.getQ();
+        this.N = frame.getN();
+        this.simulationTime = frame.getSimulationTime();
+        this.maxArrivalTime = frame.getMaxArrivalTime();
+        this.minArrivalTime = frame.getMinArrivalTime();
+        this.maxServiceTime = frame.getMaxServiceTime();
+        this.minServiceTime = frame.getMinServiceTime();
+        this.generatedTasks = new ArrayList<>();
         generateNRandomTasks();
+        for (int i = 0; i < Q; i++) {
+            Server server = new Server();
+            Thread t = new Thread(server);
+            t.start();
+        }
+
         scheduler = new Scheduler(frame.getQ());
-        generatedTasks = new ArrayList<>();
+        scheduler.changeStrategy(selectionPolicy);
     }
 
-    private void generateNRandomTasks(){
-        for (int i = 1; i <= frame.getN(); i++) {
-            int serviceTime = (int) (Math.random() * (frame.getMaxServiceTime() - frame.getMinServiceTime()) + frame.getMinServiceTime());
-            int arrivalTime = (int) (Math.random() * (frame.getMaxArrivalTime() - frame.getMinArrivalTime()) + frame.getMinArrivalTime());
-            Task task = new Task(i, serviceTime, arrivalTime);
+    private void generateNRandomTasks() {
+
+        for (int i = 0; i < N; i++) {
+            int serviceTime = (int) (Math.random() * (maxServiceTime - minServiceTime) + minServiceTime);
+            int arrivalTime = (int) (Math.random() * (maxArrivalTime - minArrivalTime) + minArrivalTime);
+            Task task = new Task(i + 1, arrivalTime, serviceTime);
             generatedTasks.add(task);
         }
-      //  Collections.sort(generatedTasks);
+        Collections.sort(generatedTasks);
     }
 
+    //public void run() {
+//    int currentTime = 0;
+//    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
+//
+//        while (currentTime < simulationTime) {
+//            writer.write("\nCurrent Time:" + currentTime + "\n");
+//            // Check if any new tasks have arrived and dispatch them to the scheduler
+//            List<Task> arrivedTasks = new ArrayList<>();
+//            for (Task task : generatedTasks) {
+//                if (task.getArrivalTime() == currentTime) {
+//                    scheduler.dispatchTask(task);
+//                    arrivedTasks.add(task);
+//                }
+//            }
+//            generatedTasks.removeAll(arrivedTasks);
+//
+//            // Print the current state of each queue
+//            List<Server> servers = scheduler.getServers();
+//            for (int i = 0; i < servers.size(); i++) {
+//                writer.write("    Queue:" + (i + 1));
+//                writer.newLine();
+//                Task[] tasks = servers.get(i).getTasks();
+//                writer.write("        Tasks: ");
+//                for (int j = 0; j < tasks.length; j++)
+//                    writer.write(tasks[j].toString());
+//                writer.newLine();
+//            }
+//
+//            // Wait for 1 second before moving to the next time step
+//            Thread.sleep(1000);
+//            currentTime++;
+//        }
+//        writer.close();
+//    } catch (IOException | InterruptedException e) {
+//        e.printStackTrace();
+//    }
+//}
     public void run() {
-        // Set the selection policy for the scheduler
-        scheduler.changeStrategy(selectionPolicy);
-
         int currentTime = 0;
-        System.out.println("Current Time:" + currentTime);
-        while(currentTime < frame.getSimulationTime()){
-            // iterate generatedTasks list and pick tasks that have the arrivalTime equal with the currentTime
-            for(Task task : generatedTasks) {
-                if (task.getArrivalTime() == currentTime) {
-                    scheduler.dispatchTask(task);
-                    generatedTasks.remove(task);
-                    // Sleep before generating the next task
-                    try {
-                        Thread.sleep(task.getServiceTime() * 1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Current Time:" + currentTime);
-                    List<Server> servers = scheduler.getServers();
-                    for (int i = 1; i <= servers.size(); i++) {
-                        System.out.print("    Queue:" + i);
-                        Task[] t = servers.get(i).getTasks();
-                        System.out.print("        Tasks: ");
-                        for(int j=1; j<= servers.get(i).getTasks().length; j++)
-                        System.out.print(t[j].TasksToString());
-                        System.out.print("");
-                        }
-
-                    // Update the current time
-                    currentTime++;
-
-                }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
+            // Create a BufferedReader to read the contents of the output file
+            BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Display the contents of the file on the simulation frame
+                simulation.setSimulationArea(line);
             }
+            reader.close();
+
+            while (currentTime < simulationTime) {
+                // Check if any new tasks have arrived and dispatch them to the scheduler
+                List<Task> arrivedTasks = new ArrayList<>();
+                for (Task task : generatedTasks) {
+                    if (task.getArrivalTime() == currentTime) {
+                        scheduler.dispatchTask(task);
+                        arrivedTasks.add(task);
+                    }
+                }
+                generatedTasks.removeAll(arrivedTasks);
+
+                // Create a new BufferedWriter for each loop iteration to avoid the "Stream closed" error
+                BufferedWriter currentWriter = new BufferedWriter(new FileWriter(outputFileName, true));
+
+                // Write the current time to the output file
+                currentWriter.write("\nCurrent Time:" + currentTime + "\n");
+
+                // Print the list of waiting tasks
+                currentWriter.write("    Waiting Tasks:");
+                currentWriter.newLine();
+                currentWriter.write("    ");
+                for (Task task : generatedTasks)
+                    currentWriter.write(task.toString() + " ");
+                currentWriter.newLine();
+
+                // Print the current state of each queue
+                List<Server> servers = scheduler.getServers();
+                for (int i = 0; i < servers.size(); i++) {
+                    currentWriter.write("    Queue:" + (i + 1));
+                    currentWriter.newLine();
+                    Task[] tasks = servers.get(i).getTasks();
+                    currentWriter.write("        Tasks: ");
+                    for (int j = 0; j < tasks.length; j++)
+                        currentWriter.write(tasks[j].toString());
+                    currentWriter.newLine();
+                }
+
+                // Close the current writer to flush the buffer and release the file
+                currentWriter.close();
+                simulation.setSimulationArea("D:/PT2023_30226_Mosila_Luciana_Assignment_2/output.txt");
+                // Wait for 1 second before moving to the next time step
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread interrupted: " + e.getMessage());
+                }
+
+                currentTime++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-    public static void main(String[] args){
-        SimulationManager gen=new SimulationManager();
-
-        Thread t=new Thread(gen);
-        t.start();
-    }
 }
+
+

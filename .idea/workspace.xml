@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5852f1e-06b6-41af-a65c-36a1825c21db" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/Simulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/Scheduler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/businessLogic/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/businessLogic/SimulationManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/SimulationFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/SimulationFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/SimulationQ.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +60,20 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.SimulationFrame">
+    <configuration name="SimulationFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.SimulationFrame" />
+      <module name="PT2023_30226_Mosila_Luciana_Assignment_2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SimulationManager" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="businessLogic.SimulationManager" />
       <module name="PT2023_30226_Mosila_Luciana_Assignment_2" />
@@ -74,6 +89,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SimulationFrame" />
         <item itemvalue="Application.SimulationManager" />
       </list>
     </recent_temporary>
@@ -96,6 +112,12 @@
       <workItem from="1682016409052" duration="629000" />
       <workItem from="1682100942498" duration="36000" />
       <workItem from="1682172236758" duration="7163000" />
+      <workItem from="1682180004024" duration="6424000" />
+      <workItem from="1682235874092" duration="1924000" />
+      <workItem from="1682334469373" duration="486000" />
+      <workItem from="1682335230023" duration="6817000" />
+      <workItem from="1682348135055" duration="21127000" />
+      <workItem from="1682369487655" duration="120000" />
     </task>
     <servers />
   </component>

@@ -16,18 +16,12 @@ public class Task implements Comparable<Task>{
     public int getID(){return this.ID;}
     public int getArrivalTime(){return  this.arrivalTime;}
     public long getServiceTime(){return this.serviceTime.longValue();}
+    public void setID(int ID){this.ID=ID;}
+    public void setArrivalTime(int arrivalTime){this.arrivalTime = arrivalTime;}
+    public void setServiceTime(int serviceTime){this.serviceTime = new AtomicInteger(serviceTime);}
 
-    public void setID(int ID){
-        this.ID=ID;}
-
-    public void setArrivalTime(int arrivalTime){
-        this.arrivalTime = arrivalTime;}
-
-    public void setServiceTime(int arrivalTime){
-        this.arrivalTime = arrivalTime;}
-
-    public String TasksToString() {
-        return "(" +ID+ "," +arrivalTime+ "," +serviceTime+ ") ";
+    public String toString() {
+        return "(" +ID+ "," +arrivalTime+ "," +serviceTime.intValue()+ ") ";
         }
 
     @Override
